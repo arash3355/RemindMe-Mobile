@@ -81,4 +81,35 @@ object FirebaseAuthManager {
 
     }
 
+    fun sendPasswordReset(
+
+        email: String,
+
+        onSuccess: () -> Unit,
+
+        onFailure: (String) -> Unit
+
+    ) {
+
+        auth.sendPasswordResetEmail(email)
+
+            .addOnSuccessListener {
+
+                onSuccess()
+
+            }
+
+            .addOnFailureListener {
+
+                onFailure(
+
+                    it.localizedMessage
+                        ?: "Failed to send reset email."
+
+                )
+
+            }
+
+    }
+
 }

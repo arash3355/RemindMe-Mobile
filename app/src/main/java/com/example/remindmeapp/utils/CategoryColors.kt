@@ -9,22 +9,22 @@ object CategoryColor {
         return when (category) {
 
             "Study" ->
-                Color.parseColor("#D6EFFF")
+                Color.parseColor("#3B82F6")
 
             "Work" ->
-                Color.parseColor("#D9F7D9")
+                Color.parseColor("#10B981")
 
             "Health" ->
-                Color.parseColor("#FFE0E0")
+                Color.parseColor("#EF4444")
 
             "Personal" ->
-                Color.parseColor("#EEE3FF")
+                Color.parseColor("#8B5CF6")
 
             "Finance" ->
-                Color.parseColor("#FFF3CD")
+                Color.parseColor("#F59E0B")
 
             else ->
-                Color.WHITE
+                Color.parseColor("#94A3B8")
 
         }
 

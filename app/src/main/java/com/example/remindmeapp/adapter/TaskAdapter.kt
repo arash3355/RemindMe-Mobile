@@ -44,6 +44,9 @@ class TaskAdapter(
 
         val category: TextView =
             itemView.findViewById(R.id.txtCategory)
+
+        val categoryBar: View =
+            itemView.findViewById(R.id.viewCategory)
     }
 
     override fun onCreateViewHolder(
@@ -82,7 +85,9 @@ class TaskAdapter(
         holder.check.isChecked = task.isDone
         holder.check.isEnabled = true
 
-        holder.card.setCardBackgroundColor(
+        holder.card.setCardBackgroundColor(android.graphics.Color.WHITE)
+
+        holder.categoryBar.setBackgroundColor(
 
             CategoryColor.get(task.category)
 
@@ -133,6 +138,9 @@ class CalendarTaskAdapter(
 
         val category: TextView =
             itemView.findViewById(R.id.txtCategory)
+
+        val viewCategory: View =
+            itemView.findViewById(R.id.viewCategory)
     }
 
     override fun onCreateViewHolder(
@@ -184,6 +192,11 @@ class CalendarTaskAdapter(
         holder.card.isLongClickable = false
 
         holder.card.setCardBackgroundColor(
+
+            android.graphics.Color.WHITE
+
+        )
+        holder.viewCategory.setBackgroundColor(
 
             CategoryColor.get(task.category)
 
