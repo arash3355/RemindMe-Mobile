@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+
+    android:gravity="center"
+
+    android:background="@drawable/bg_gradient">
+
+  <ImageView
+      android:id="@+id/imgLogo"
+
+      android:layout_width="140dp"
+      android:layout_height="140dp"
+
+      android:src="@mipmap/ic_launcher"
+
+      android:layout_marginBottom="16dp"/>
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:text="RemindMe"
+
+      android:textSize="30sp"
+
+      android:textStyle="bold"
+
+      android:textColor="#0D3B66"/>
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:text="Never Forget Your Task"
+
+      android:textSize="14sp"
+
+      android:textColor="#4D4D4D"
+
+      android:layout_marginTop="8dp"
+
+      android:layout_marginBottom="40dp"/>
+
+  <Button
+      android:id="@+id/btnStart"
+
+      android:layout_width="220dp"
+      android:layout_height="wrap_content"
+
+      android:text="Get Started"/>
+
+</LinearLayout>

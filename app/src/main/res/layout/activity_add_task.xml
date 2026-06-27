@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etTitle"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:hint="Task Title"/>
+
+    <EditText
+        android:id="@+id/etDescription"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:hint="Description"/>
+
+    <EditText
+        android:id="@+id/etDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Date"
+        android:focusable="false"
+        android:clickable="true"/>
+
+    <EditText
+        android:id="@+id/etTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Time"
+        android:focusable="false"
+        android:clickable="true"/>
+
+    <Spinner
+        android:id="@+id/spCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Category"/>
+
+    <Button
+        android:id="@+id/btnSave"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="Save"/>
+
+    <Button
+        android:id="@+id/btnDelete"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="Delete"
+
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>
