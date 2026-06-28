@@ -13,6 +13,14 @@ import com.example.remindmeapp.firebase.FirebaseAuthManager
 import com.example.remindmeapp.storage.TaskStorage
 import com.example.remindmeapp.R
 import com.example.remindmeapp.storage.GuestStorage
+import android.widget.Switch
+import com.example.remindmeapp.storage.NotificationPreference
+import com.example.remindmeapp.utils.ToneMapper
+
+import android.media.RingtoneManager
+import android.net.Uri
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.remindmeapp.notification.ReminderReceiver
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -21,6 +29,63 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var txtEmail: TextView
 
     private lateinit var btnManage: Button
+
+    private val reminderToneLauncher = registerForActivityResult(
+
+        ActivityResultContracts.StartActivityForResult()
+
+    ) { result ->
+
+        if (result.resultCode == RESULT_OK) {
+
+            val uri = result.data?.getParcelableExtra<Uri>(
+                RingtoneManager.EXTRA_RINGTONE_PICKED_URI
+            )
+
+            if (uri != null) {
+
+                NotificationPreference.setReminderToneUri(
+                    this,
+                    uri.toString()
+                )
+
+                loadNotificationSetting()
+
+            }
+
+        }
+
+    }
+
+    private val dueToneLauncher = registerForActivityResult(
+
+        ActivityResultContracts.StartActivityForResult()
+
+    ) { result ->
+
+        if (result.resultCode == RESULT_OK) {
+
+            val uri = result.data?.getParcelableExtra<Uri>(
+                RingtoneManager.EXTRA_RINGTONE_PICKED_URI
+            )
+
+            if (uri != null) {
+
+                NotificationPreference.setDueToneUri(
+
+                    this,
+
+                    uri.toString()
+
+                )
+
+                loadNotificationSetting()
+
+            }
+
+        }
+
+    }
 
     private fun updateProfile() {
 
@@ -46,6 +111,61 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
+    private fun loadNotificationSetting() {
+
+        val switchNotification =
+            findViewById<Switch>(R.id.switchNotification)
+
+        val txtReminderSound =
+            findViewById<TextView>(R.id.txtReminderSound)
+
+        val txtDueDateSound =
+            findViewById<TextView>(R.id.txtDueDateSound)
+
+        switchNotification.isChecked =
+            NotificationPreference.isNotificationEnabled(this)
+
+        val reminderUri = NotificationPreference.getReminderToneUri(this)
+
+        if (reminderUri != null) {
+
+            val ringtone = RingtoneManager.getRingtone(
+
+                this,
+
+                Uri.parse(reminderUri)
+
+            )
+
+            txtReminderSound.text = ringtone.getTitle(this) + " >"
+
+        } else {
+
+            txtReminderSound.text = "Default >"
+
+        }
+
+        val dueUri = NotificationPreference.getDueToneUri(this)
+
+        if (dueUri != null) {
+
+            val ringtone = RingtoneManager.getRingtone(
+
+                this,
+
+                Uri.parse(dueUri)
+
+            )
+
+            txtDueDateSound.text = ringtone.getTitle(this) + " >"
+
+        } else {
+
+            txtDueDateSound.text = "Default >"
+
+        }
+    }
+
     override fun onResume() {
 
         super.onResume()
@@ -53,6 +173,8 @@ class ProfileActivity : AppCompatActivity() {
         SessionManager.refreshSession()
 
         updateProfile()
+
+        loadNotificationSetting()
 
     }
 
@@ -62,13 +184,78 @@ class ProfileActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_profile)
 
+        val txtBack =
+            findViewById<TextView>(R.id.txtBack)
+
+        val switchNotification =
+            findViewById<Switch>(R.id.switchNotification)
+
+        val txtReminderSound =
+            findViewById<TextView>(R.id.txtReminderSound)
+
+        val txtDueDateSound =
+            findViewById<TextView>(R.id.txtDueDateSound)
+
+
+        loadNotificationSetting()
+
+
         txtName = findViewById(R.id.txtName)
 
         txtEmail = findViewById(R.id.txtEmail)
 
         btnManage = findViewById(R.id.btnManage)
 
+
         updateProfile()
+
+        txtBack.setOnClickListener {
+
+            finish()
+
+        }
+
+        switchNotification.setOnCheckedChangeListener { _, isChecked ->
+
+            NotificationPreference.setNotificationEnabled(
+
+                this,
+
+                isChecked
+
+            )
+
+        }
+
+        txtReminderSound.setOnClickListener {
+
+            val intent = Intent(
+                RingtoneManager.ACTION_RINGTONE_PICKER
+            )
+
+            intent.putExtra(
+                RingtoneManager.EXTRA_RINGTONE_TYPE,
+                RingtoneManager.TYPE_NOTIFICATION
+            )
+
+            reminderToneLauncher.launch(intent)
+
+        }
+
+        txtDueDateSound.setOnClickListener {
+
+            val intent = Intent(
+                RingtoneManager.ACTION_RINGTONE_PICKER
+            )
+
+            intent.putExtra(
+                RingtoneManager.EXTRA_RINGTONE_TYPE,
+                RingtoneManager.TYPE_ALARM
+            )
+
+            dueToneLauncher.launch(intent)
+
+        }
 
         btnManage.setOnClickListener {
 
@@ -133,5 +320,30 @@ class ProfileActivity : AppCompatActivity() {
             }
 
         }
+
+
+//        val btnTest =
+//            findViewById<Button>(R.id.btnTestNotification)
+//
+//        btnTest.setOnClickListener {
+//
+//            val intent = Intent(
+//                this,
+//                ReminderReceiver::class.java
+//            )
+//
+//            intent.putExtra(
+//                "title",
+//                "Test Reminder"
+//            )
+//
+//            intent.putExtra(
+//                "description",
+//                "Notification from ReminderReceiver."
+//            )
+//
+//            sendBroadcast(intent)
+//
+//        }
     }
 }

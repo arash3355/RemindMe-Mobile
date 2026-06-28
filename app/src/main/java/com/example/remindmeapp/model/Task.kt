@@ -12,6 +12,8 @@ data class Task(
 
     var time: String = "",
 
+    var reminder: String = "At time of event",
+
     var category: String = "",
 
     var isDone: Boolean = false

@@ -419,6 +419,12 @@ class HomeActivity : AppCompatActivity() {
             position
         )
 
+        intent.putExtra(
+            Constant.EXTRA_REMINDER,
+            task.reminder
+
+        )
+
         startActivityForResult(
             intent,
             Constant.REQUEST_EDIT_TASK

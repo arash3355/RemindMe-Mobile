@@ -14,4 +14,6 @@ object Constant {
     const val EXTRA_CATEGORY = "category"
     const val EXTRA_POSITION = "position"
 
+    const val EXTRA_REMINDER = "reminder"
+
 }

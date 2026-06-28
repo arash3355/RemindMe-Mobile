@@ -103,19 +103,55 @@ class AddTaskActivity : AppCompatActivity() {
                 R.id.spCategory
             )
 
+        val reminderSpinner =
+            findViewById<Spinner>(
+                R.id.spReminder
+            )
+
         val categories = arrayOf(
+
             "Study",
             "Work",
             "Personal",
             "Health",
             "Finance"
+
+        )
+
+        val reminders = arrayOf(
+
+            "At time of event",
+
+            "10 minutes before",
+
+            "1 hour before",
+
+            "1 day before",
+
+            "3 days before"
+
         )
 
         spinner.adapter =
             ArrayAdapter(
+
                 this,
+
                 android.R.layout.simple_spinner_dropdown_item,
+
                 categories
+
+            )
+
+        reminderSpinner.adapter =
+            ArrayAdapter(
+
+                this,
+
+                android.R.layout.simple_spinner_dropdown_item,
+
+                reminders
+
             )
 
         val btnSave =
@@ -163,6 +199,21 @@ class AddTaskActivity : AppCompatActivity() {
             if (index >= 0) {
                 spinner.setSelection(index)
             }
+        }
+
+        val oldReminder =
+            intent.getStringExtra("reminder")
+
+        if (oldReminder != null) {
+
+            val index = reminders.indexOf(oldReminder)
+
+            if (index >= 0) {
+
+                reminderSpinner.setSelection(index)
+
+            }
+
         }
 
         btnDelete.setOnClickListener {
@@ -296,6 +347,9 @@ class AddTaskActivity : AppCompatActivity() {
                 time = etTime.text.toString(),
 
                 category = spinner.selectedItem.toString(),
+
+                reminder =
+                    reminderSpinner.selectedItem.toString(),
 
                 isDone = if (position == -1)
                     false

@@ -9,6 +9,7 @@ import com.example.remindmeapp.storage.TaskStorage
 import com.example.remindmeapp.storage.GuestStorage
 import com.example.remindmeapp.firebase.FirestoreManager
 import com.example.remindmeapp.R
+import com.example.remindmeapp.notification.NotificationHelper
 
 class SplashActivity : AppCompatActivity() {
 
@@ -17,6 +18,8 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_splash)
+
+        NotificationHelper.createChannel(this)
 
         val btnStart =
             findViewById<Button>(R.id.btnStart)
