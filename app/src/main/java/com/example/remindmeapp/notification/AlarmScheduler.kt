@@ -18,6 +18,11 @@ object AlarmScheduler {
 
     ) {
 
+        android.util.Log.d(
+            "ALARM",
+            "scheduleReminder() dipanggil"
+        )
+
         if (task.reminder == "At time of event") {
 
             return
@@ -41,6 +46,14 @@ object AlarmScheduler {
             context,
 
             ReminderReceiver::class.java
+
+        )
+
+        intent.putExtra(
+
+            "type",
+
+            "REMINDER"
 
         )
 
@@ -74,38 +87,41 @@ object AlarmScheduler {
         )
 
         val alarmManager =
+            context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-            context.getSystemService(
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            triggerTime,
+            pendingIntent
+        )
 
-                Context.ALARM_SERVICE
-
-            ) as AlarmManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            alarmManager.setExactAndAllowWhileIdle(
-
-                AlarmManager.RTC_WAKEUP,
-
-                triggerTime,
-
-                pendingIntent
-
-            )
-
-        } else {
-
-            alarmManager.setExact(
-
-                AlarmManager.RTC_WAKEUP,
-
-                triggerTime,
-
-                pendingIntent
-
-            )
-
-        }
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//
+//            alarmManager.setExactAndAllowWhileIdle(
+//
+//                AlarmManager.RTC_WAKEUP,
+//
+//                triggerTime,
+//
+//                pendingIntent
+//
+//            )
+//
+//
+//        } else {
+//
+//            alarmManager.setExact(
+//
+//                AlarmManager.RTC_WAKEUP,
+//
+//                triggerTime,
+//
+//                pendingIntent
+//
+//            )
+//
+//        }
 
     }
 
@@ -117,6 +133,11 @@ object AlarmScheduler {
 
     ) {
 
+        android.util.Log.d(
+            "ALARM",
+            "scheduleDueDate() dipanggil"
+        )
+
         val triggerTime =
 
             ReminderCalculator.getDueDateTime(task)
@@ -126,6 +147,14 @@ object AlarmScheduler {
             context,
 
             ReminderReceiver::class.java
+
+        )
+
+        intent.putExtra(
+
+            "type",
+
+            "DUE_DATE"
 
         )
 
@@ -158,39 +187,54 @@ object AlarmScheduler {
 
         )
 
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//
+//            alarmManager.setExactAndAllowWhileIdle(
+//
+//                AlarmManager.RTC_WAKEUP,
+//
+//                triggerTime,
+//
+//                pendingIntent
+//
+//            )
+//
+//        } else {
+//
+//            alarmManager.setExact(
+//
+//                AlarmManager.RTC_WAKEUP,
+//
+//                triggerTime,
+//
+//                pendingIntent
+//
+//            )
+//
+//        }
+
         val alarmManager =
-
             context.getSystemService(
-
                 Context.ALARM_SERVICE
-
             ) as AlarmManager
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        alarmManager.set(
 
-            alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
 
-                AlarmManager.RTC_WAKEUP,
+            triggerTime,
 
-                triggerTime,
+            pendingIntent
 
-                pendingIntent
+        )
 
-            )
+        android.util.Log.d(
 
-        } else {
+            "ALARM",
 
-            alarmManager.setExact(
+            "Due Date dijadwalkan: ${task.title}"
 
-                AlarmManager.RTC_WAKEUP,
-
-                triggerTime,
-
-                pendingIntent
-
-            )
-
-        }
+        )
 
     }
 

@@ -104,16 +104,12 @@ object FirestoreManager {
 
     ) {
 
-        val doc =
+        db.collection("users")
+            .document(uid)
+            .collection("tasks")
+            .document(task.id)
 
-            db.collection("users")
-                .document(uid)
-                .collection("tasks")
-                .document()
-
-        task.id = doc.id
-
-        doc.set(task)
+            .set(task)
 
             .addOnSuccessListener {
 

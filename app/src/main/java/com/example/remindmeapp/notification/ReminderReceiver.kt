@@ -23,6 +23,12 @@ class ReminderReceiver : BroadcastReceiver() {
             "Receiver berhasil dipanggil"
         )
 
+        val type =
+
+            intent.getStringExtra("type")
+
+                ?: "REMINDER"
+
         val title =
 
             intent.getStringExtra("title")
@@ -71,9 +77,47 @@ class ReminderReceiver : BroadcastReceiver() {
 
                 .setSmallIcon(R.mipmap.ic_launcher)
 
-                .setContentTitle(title)
+                .setContentTitle(
 
-                .setContentText(description)
+                    if (type == "REMINDER")
+
+                        "🔔 Reminder"
+
+                    else
+
+                        "⏰ Due Date"
+
+                )
+
+                .setContentText(
+
+                    if (type == "REMINDER")
+
+                        "$title\n$description"
+
+                    else
+
+                        "$description\nDeadline has arrived."
+
+                )
+
+                .setStyle(
+
+                    NotificationCompat.BigTextStyle()
+
+                        .bigText(
+
+                            if (type == "REMINDER")
+
+                                "$title\n$description"
+
+                            else
+
+                                "$description\nDeadline has arrived."
+
+                        )
+
+                )
 
                 .setContentIntent(pendingIntent)
 

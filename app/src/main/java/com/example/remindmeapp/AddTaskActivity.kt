@@ -17,6 +17,8 @@ import com.example.remindmeapp.firebase.FirestoreManager
 import com.example.remindmeapp.storage.SessionManager
 import com.example.remindmeapp.R
 import com.example.remindmeapp.storage.GuestStorage
+import com.example.remindmeapp.notification.AlarmScheduler
+import java.util.UUID
 
 class AddTaskActivity : AppCompatActivity() {
 
@@ -80,7 +82,11 @@ class AddTaskActivity : AppCompatActivity() {
                 { _, hour, minute ->
 
                     etTime.setText(
-                        "$hour:$minute"
+                        String.format(
+                            "%02d:%02d",
+                            hour,
+                            minute
+                        )
                     )
 
                 },
@@ -336,7 +342,13 @@ class AddTaskActivity : AppCompatActivity() {
 
             val task = Task(
 
-                id = if (position == -1) "" else TaskStorage.taskList[position].id,
+                id = if (position == -1)
+
+                    UUID.randomUUID().toString()
+
+                else
+
+                    TaskStorage.taskList[position].id,
 
                 title = etTitle.text.toString(),
 
@@ -375,6 +387,24 @@ class AddTaskActivity : AppCompatActivity() {
                     this,
 
                     TaskStorage.taskList
+
+                )
+
+                AlarmScheduler.scheduleReminder(
+
+
+
+                    this,
+
+                    task
+
+                )
+//
+                AlarmScheduler.scheduleDueDate(
+
+                    this,
+
+                    task
 
                 )
 
@@ -468,6 +498,22 @@ class AddTaskActivity : AppCompatActivity() {
 
                     )
 
+                    AlarmScheduler.scheduleReminder(
+
+                        this,
+
+                        task
+
+                    )
+//
+                    AlarmScheduler.scheduleDueDate(
+
+                        this,
+
+                        task
+
+                    )
+
                 } else {
 
                     FirestoreManager.updateTask(
@@ -496,6 +542,22 @@ class AddTaskActivity : AppCompatActivity() {
 
                                         Intent.FLAG_ACTIVITY_CLEAR_TOP or
                                                 Intent.FLAG_ACTIVITY_SINGLE_TOP
+
+                                    )
+
+                                    AlarmScheduler.scheduleReminder(
+
+                                        this,
+
+                                        task
+
+                                    )
+//
+                                    AlarmScheduler.scheduleDueDate(
+
+                                        this,
+
+                                        task
 
                                     )
 
