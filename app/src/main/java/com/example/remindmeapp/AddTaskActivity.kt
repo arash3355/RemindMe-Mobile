@@ -390,6 +390,29 @@ class AddTaskActivity : AppCompatActivity() {
 
                 )
 
+                AlarmScheduler.cancelAlarm(
+
+                    this,
+
+                    task
+
+                )
+
+                AlarmScheduler.scheduleReminder(
+
+                    this,
+
+                    task
+
+                )
+
+                AlarmScheduler.scheduleDueDate(
+
+                    this,
+
+                    task
+                )
+
                 AlarmScheduler.scheduleReminder(
 
 
@@ -542,6 +565,14 @@ class AddTaskActivity : AppCompatActivity() {
 
                                         Intent.FLAG_ACTIVITY_CLEAR_TOP or
                                                 Intent.FLAG_ACTIVITY_SINGLE_TOP
+
+                                    )
+
+                                    AlarmScheduler.cancelAlarm(
+
+                                        this,
+
+                                        task
 
                                     )
 

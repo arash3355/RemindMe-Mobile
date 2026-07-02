@@ -90,7 +90,7 @@
 
                     android:layout_height="70dp"
 
-                    android:src="@android:drawable/sym_def_app_icon"/>
+                    android:src="@drawable/app_logo"/>
 
 
 
@@ -529,7 +529,7 @@
 
             android:layout_marginTop="36dp"
 
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/app_logo"/>
 
 
 

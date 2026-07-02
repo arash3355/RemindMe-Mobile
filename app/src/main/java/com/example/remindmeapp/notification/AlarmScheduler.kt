@@ -238,4 +238,90 @@ object AlarmScheduler {
 
     }
 
+    fun cancelAlarm(
+
+        context: Context,
+
+        task: Task
+
+    ) {
+
+        val reminderIntent = Intent(
+
+            context,
+
+            ReminderReceiver::class.java
+
+        )
+
+        val reminderPendingIntent = PendingIntent.getBroadcast(
+
+            context,
+
+            task.id.hashCode(),
+
+            reminderIntent,
+
+            PendingIntent.FLAG_NO_CREATE or
+                    PendingIntent.FLAG_IMMUTABLE
+
+        )
+
+
+
+        val dueIntent = Intent(
+
+            context,
+
+            ReminderReceiver::class.java
+
+        )
+
+        val duePendingIntent = PendingIntent.getBroadcast(
+
+            context,
+
+            task.id.hashCode() + 100000,
+
+            dueIntent,
+
+            PendingIntent.FLAG_NO_CREATE or
+                    PendingIntent.FLAG_IMMUTABLE
+
+        )
+
+        val alarmManager =
+
+            context.getSystemService(
+
+                Context.ALARM_SERVICE
+
+            ) as AlarmManager
+
+        if (reminderPendingIntent != null) {
+
+            alarmManager.cancel(reminderPendingIntent)
+
+            reminderPendingIntent.cancel()
+
+        }
+
+        if (duePendingIntent != null) {
+
+            alarmManager.cancel(duePendingIntent)
+
+            duePendingIntent.cancel()
+
+        }
+
+        android.util.Log.d(
+
+            "ALARM",
+
+            "Alarm lama dibatalkan"
+
+        )
+
+    }
+
 }
